@@ -34,28 +34,16 @@ class _ChartScreenState extends State<ChartScreen> {
             onSelected: (value) {
               switch (value) {
                 case 'column_chart':
-                  setState(() {
-                    chartViewModel.chartModel.viewColumnChart.value =
-                        !chartViewModel.chartModel.viewColumnChart.value;
-                  });
+                  chartViewModel.toggleViewColumnChart();
                   break;
                 case 'line_chart':
-                  setState(() {
-                    chartViewModel.chartModel.viewLineChart.value =
-                        !chartViewModel.chartModel.viewLineChart.value;
-                  });
+                  chartViewModel.toggleViewLineChart();
                   break;
                 case 'frequency_list':
-                  setState(() {
-                    chartViewModel.chartModel.view55.value =
-                        !chartViewModel.chartModel.view55.value;
-                  });
+                  chartViewModel.toggleView55();
                   break;
                 case 'winning_statistics':
-                  setState(() {
-                    chartViewModel.chartModel.winner.value =
-                        !chartViewModel.chartModel.winner.value;
-                  });
+                  chartViewModel.toggleViewWinner();
                   break;
               }
             },
@@ -171,14 +159,12 @@ class _ChartScreenState extends State<ChartScreen> {
                         if (chartViewModel
                             .chartModel.formKey.value.currentState!
                             .validate()) {
-                          setState(() {
-                            chartViewModel.chartModel.startCode.value =
-                                int.tryParse(chartViewModel
-                                    .chartModel.startController.text);
-                            chartViewModel.chartModel.endCode.value =
-                                int.tryParse(chartViewModel
-                                    .chartModel.endController.text);
-                          });
+                          chartViewModel.chartModel.startCode.value =
+                              int.tryParse(chartViewModel
+                                  .chartModel.startController.text);
+                          chartViewModel.chartModel.endCode.value =
+                              int.tryParse(
+                                  chartViewModel.chartModel.endController.text);
                           chartViewModel.getData(
                               chartViewModel.chartModel.startCode.value!,
                               chartViewModel.chartModel.endCode.value!);
@@ -193,7 +179,8 @@ class _ChartScreenState extends State<ChartScreen> {
               Row(
                 children: [
                   Visibility(
-                    visible: chartViewModel.chartModel.viewColumnChart.value,
+                    visible:
+                        chartViewModel.chartModel.viewColumnChart.value == true,
                     child: Expanded(
                       child: InteractiveViewer(
                         minScale: 0.5,
@@ -235,7 +222,8 @@ class _ChartScreenState extends State<ChartScreen> {
                     ),
                   ),
                   Visibility(
-                    visible: chartViewModel.chartModel.viewColumnChart.value,
+                    visible:
+                        chartViewModel.chartModel.viewColumnChart.value == true,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.end,
@@ -260,7 +248,8 @@ class _ChartScreenState extends State<ChartScreen> {
                 ],
               ),
               Visibility(
-                visible: chartViewModel.chartModel.viewColumnChart.value,
+                visible:
+                    chartViewModel.chartModel.viewColumnChart.value == true,
                 child: Text(
                     'Biểu đồ cột thống kê từ kỳ ${chartViewModel.chartModel.startCode.value} đến kỳ  ${chartViewModel.chartModel.startCode.value! + (chartViewModel.numOfDrawPeriods - 1)}',
                     style: const TextStyle(
@@ -272,7 +261,7 @@ class _ChartScreenState extends State<ChartScreen> {
               ),
               const SizedBox(height: 16),
               Visibility(
-                visible: chartViewModel.chartModel.viewLineChart.value,
+                visible: chartViewModel.chartModel.viewLineChart.value == true,
                 child: Expanded(
                   child: InteractiveViewer(
                     boundaryMargin: const EdgeInsets.all(0),
@@ -313,7 +302,7 @@ class _ChartScreenState extends State<ChartScreen> {
                 ),
               ),
               Visibility(
-                visible: chartViewModel.chartModel.viewLineChart.value,
+                visible: chartViewModel.chartModel.viewLineChart.value == true,
                 child: Text(
                     'Biểu đồ đường thống kê từ kỳ ${chartViewModel.chartModel.startCode.value} đến kỳ  ${chartViewModel.chartModel.startCode.value! + (chartViewModel.numOfDrawPeriods - 1)}',
                     style: const TextStyle(
@@ -325,16 +314,14 @@ class _ChartScreenState extends State<ChartScreen> {
               ),
               const SizedBox(height: 10),
               Visibility(
-                visible: chartViewModel.chartModel.view55.value,
+                visible: chartViewModel.chartModel.view55.value == true,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     InkWell(
                       onTap: () {
-                        setState(() {
-                          chartViewModel.chartModel.sortAscending.value = true;
-                          chartViewModel.sortFrequency();
-                        });
+                        chartViewModel.chartModel.sortAscending.value = true;
+                        chartViewModel.sortFrequency();
                         ScaffoldMessenger.of(context)
                             .removeCurrentSnackBar(); // Đóng Snackbar hiện tại (nếu có)
                         ScaffoldMessenger.of(context).showSnackBar(
@@ -351,10 +338,8 @@ class _ChartScreenState extends State<ChartScreen> {
                     const SizedBox(width: 15),
                     InkWell(
                       onTap: () {
-                        setState(() {
-                          chartViewModel.chartModel.sortAscending.value = false;
-                          chartViewModel.sortFrequency();
-                        });
+                        chartViewModel.chartModel.sortAscending.value = false;
+                        chartViewModel.sortFrequency();
                         ScaffoldMessenger.of(context)
                             .removeCurrentSnackBar(); // Đóng Snackbar hiện tại (nếu có)
                         ScaffoldMessenger.of(context).showSnackBar(
@@ -372,7 +357,7 @@ class _ChartScreenState extends State<ChartScreen> {
                 ),
               ),
               Visibility(
-                visible: chartViewModel.chartModel.view55.value,
+                visible: chartViewModel.chartModel.view55.value == true,
                 child: Expanded(
                   child: SingleChildScrollView(
                     padding: const EdgeInsets.all(15),
@@ -423,7 +408,7 @@ class _ChartScreenState extends State<ChartScreen> {
                 ),
               ),
               Visibility(
-                visible: chartViewModel.chartModel.winner.value,
+                visible: chartViewModel.chartModel.winner.value == true,
                 child: Column(
                   children: [
                     Row(

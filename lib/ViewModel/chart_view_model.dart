@@ -5,6 +5,26 @@ import 'package:get/get.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 
 class ChartViewModel extends GetxController {
+  void toggleViewColumnChart() {
+    chartModel.viewColumnChart.toggle();
+  }
+
+  void toggleViewLineChart() {
+    chartModel.viewLineChart.toggle();
+  }
+
+  void toggleView55() {
+    chartModel.view55.toggle();
+  }
+
+  void toggleViewWinner() {
+    chartModel.winner.toggle();
+  }
+
+  void toggleSortAscending() {
+    chartModel.sortAscending.toggle();
+  }
+
   final ChartModel chartModel = ChartModel();
   int numOfDrawPeriods = 1;
 

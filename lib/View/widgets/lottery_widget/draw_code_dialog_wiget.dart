@@ -56,12 +56,9 @@ class DrawCodeDialog extends StatelessWidget {
                 TextField(
                   controller: searchController,
                   onChanged: (value) {
-                    setState(() {
-                      filteredDrawCodes = lotteryViewModel
-                          .lotteryModel.drawCodes
-                          .where((drawCode) => drawCode.contains(value))
-                          .toList();
-                    });
+                    filteredDrawCodes = lotteryViewModel.lotteryModel.drawCodes
+                        .where((drawCode) => drawCode.contains(value))
+                        .toList();
                   },
                   decoration: const InputDecoration(
                     hintText: 'Tìm kiếm theo kỳ',

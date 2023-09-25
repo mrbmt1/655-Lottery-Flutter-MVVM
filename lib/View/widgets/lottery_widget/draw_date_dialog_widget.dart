@@ -54,12 +54,9 @@ class DrawDateDialog extends StatelessWidget {
                 TextField(
                   controller: searchController,
                   onChanged: (value) {
-                    setState(() {
-                      filteredDrawDates = lotteryViewModel
-                          .lotteryModel.drawDates
-                          .where((drawDate) => drawDate.contains(value))
-                          .toList();
-                    });
+                    filteredDrawDates = lotteryViewModel.lotteryModel.drawDates
+                        .where((drawDate) => drawDate.contains(value))
+                        .toList();
                   },
                   decoration: const InputDecoration(
                     hintText: 'Tìm kiếm theo ngày',
